@@ -1,0 +1,43 @@
+# Packages for repo.rossmel.com, built by packaging/build.sh (VERSION and STAGE come from it).
+# One tree, three formats: deb, rpm and pacman. record is a Bash script, so the package is for any architecture.
+name: ross-record
+arch: all
+platform: linux
+version: ${VERSION}
+release: 1
+section: sound
+priority: optional
+maintainer: Rossmel Abasto <packages@rossmel.com>
+vendor: Rossmel Abasto
+homepage: https://repo.rossmel.com/record/
+license: MIT
+description: |-
+  A microphone recorder for the terminal, with a live level meter.
+  Hands-free mode, clean-up, any format, and transcripts with ross-transcribe.
+
+contents:
+  - src: ${STAGE}/usr/bin/record
+    dst: /usr/bin/record
+    file_info: { mode: 0755 }
+  - src: ${STAGE}/usr/share/licenses/ross-record/LICENSE
+    dst: /usr/share/licenses/ross-record/LICENSE
+  - src: ${STAGE}/usr/share/doc/ross-record/README.md
+    dst: /usr/share/doc/ross-record/README.md
+
+overrides:
+  # SoX with PulseAudio input (served by PipeWire), pactl, and Perl for the live meter filter.
+  deb:
+    depends: [sox, libsox-fmt-pulse, pulseaudio-utils, perl-base]
+    suggests: [ross-transcribe]
+  rpm:
+    depends: [sox, pulseaudio-utils, perl-interpreter]
+    suggests: [ross-transcribe]
+  archlinux:
+    depends: [sox, libpulse, perl]
+    optdepends: ['ross-transcribe-bin: transcripts of your recordings']
+
+deb:
+  compression: zstd
+rpm:
+  compression: zstd
+  summary: A microphone recorder for the terminal, with a live level meter
