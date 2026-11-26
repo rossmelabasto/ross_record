@@ -33,7 +33,8 @@ overrides:
     depends: [sox, pulseaudio-utils, perl-interpreter]
     suggests: [ross-transcribe]
   archlinux:
-    depends: [sox, libpulse, perl]
+    # libebur128: Arch's sox 14.8.0.1 links it but doesn't declare it (without it sox fails to start).
+    depends: [sox, libebur128, libpulse, perl]
     suggests: [ross-transcribe-bin]
 
 deb:
