@@ -34,7 +34,7 @@ overrides:
     suggests: [ross-transcribe]
   archlinux:
     depends: [sox, libpulse, perl]
-    optdepends: ['ross-transcribe-bin: transcripts of your recordings']
+    suggests: [ross-transcribe-bin]
 
 deb:
   compression: zstd
